@@ -1,0 +1,142 @@
+@import '~antd/dist/antd.css';
+
+$primary-1: #000046;
+$primary-2: #1CB5E0;
+
+@mixin view-wh{
+@include width-height(100%,100% )
+}
+
+@mixin width-height($width, $height){
+  width:$width;
+  height: $height;
+}
+
+@mixin  margin-padding($margin, $padding) {
+  margin: $margin;
+  padding: $padding;
+}
+
+@mixin center-align {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+html, body, #success{
+@include view-wh;
+}
+
+body{
+@include margin-padding(0,0);
+}
+
+.dashboard-wrapper{
+  @include view-wh;
+  @include center-align;
+  flex-direction: column;
+  background: linear-gradient(135deg, #000046, #1CB5E0);
+}
+
+.dashboard-intro{
+  @include center-align;
+  flex-direction: column;
+}
+
+.dashboard-title{
+  font-size: 72px;
+  font-weight: 500;
+  line-height: 47px;
+  letter-spacing: 4px;  
+  color: #7EDA57;
+}
+
+.dashboard-side{
+  height: 100%;
+}
+
+.dashboard-main{
+  margin-top:30px;
+  margin-right: 20px;
+  width: calc(100% - 400px);
+  height: 100%;
+
+}
+
+.dashboard-content{
+  padding: 50px;
+  min-height: 360px;
+  background: rgba(0, 0,0, 0.3);
+  border-radius: 20px;
+  height: calc(100% - 30px);
+  overflow: scroll;
+}
+
+.store-card{
+  width: 300px;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.ant-card-meta-title, .ant-card-meta-description{
+  color:white;
+}
+
+.ant-card-meta-description{
+  height: 70px;
+  overflow: scroll;
+}
+
+.ant-card-body{
+  border-top: 1px solid;
+}
+
+.ant-layout-sider {
+  height: calc(100% - 48px);
+}
+
+.category-card{
+  width: 150px;
+  background: linear-gradient(135deg, #2980b9, #2c3e50);  
+  color: white;
+  border-radius: 50%;
+  padding: 20px;
+  margin: 80px 4px;
+}
+
+.upload-dragger {
+  width: 300px;  
+  .ant-upload {
+    background: linear-gradient(45deg, #1e3c72, #2a5298);
+    padding: 30px;
+    height: 200px;
+  }
+}
+
+.ant-upload.ant-upload-drag:not(.ant-upload-disabled):hover,
+.ant-upload.ant-upload-drag.ant-upload-drag-hover:not(.ant-upload-disable) {
+  border-color: $primary-2;
+}
+
+.ant-upload-list-item:hover .ant-upload-list-item-info {
+  background-color: $primary-1;
+  border-radius: 5px;
+}
+
+.ant-upload-list-item{
+  display: none;
+}
+
+.ant-layout-sider-children{
+  width: 300px;
+  margin: auto;
+}
+
+.ant-input {
+  border-radius: 40px;
+}
+
+
