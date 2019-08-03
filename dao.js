@@ -175,6 +175,31 @@ async function getStores(){
 	} 
 	  return null;
 }
+async function getCatagories(){
+	try{
+		 const q1 = {
+				   text: 'SELECT * FROM category'
+				 }
+	  var rows= await queryExecutor(q1);
+	  if(rows) return rows;
+	}catch(e){
+		console.log(error)
+	} 
+	  return null;
+}
+async function getItemsByCategoryId(query){
+	try{
+		 const q1 = {
+				   text: 'SELECT * FROM items where category_frn_id=$1 limit 100',
+				   values:[query]
+				 }
+	  var rows= await queryExecutor(q1);
+	  if(rows) return rows;
+	}catch(e){
+		console.log(error)
+	} 
+	  return null;
+}
 async function searchItemsByName(query){
 	try{
 		 const q1 = {
@@ -243,5 +268,5 @@ async function queryExecutor(queryObj){
     
 }
 module.exports= {
-		createNewStore,createNewOrder,createNewItem,assignItemToStore,addOrderItem,searchItemsByName,getItemsForStores,getStores,searchStoreByName,getStoresbyItemId
+		createNewStore,createNewOrder,createNewItem,assignItemToStore,addOrderItem,searchItemsByName,getItemsForStores,getStores,searchStoreByName,getStoresbyItemId,getCatagories,getItemsByCategoryId
 }

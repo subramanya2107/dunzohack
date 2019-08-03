@@ -77,8 +77,32 @@ app.get('/item/:itemId/stores',async (req, res, next) => {
 		next(e);
 	}
 });
-
-
+app.get('/item/:itemId/stores',async (req, res, next) => {
+	try{
+		var query=req.params.itemId;	
+		var items=await db.getStoresbyItemId(query);		
+		return res.status(200).json({"stores":items})
+	}catch(e){
+		next(e);
+	}
+});
+app.get('/category',async (req, res, next) => {
+	try{
+		var items=await db.getCatagories();		
+		return res.status(200).json({"categories":items})
+	}catch(e){
+		next(e);
+	}
+});
+app.get('/category/:categoryId/items',async (req, res, next) => {
+	try{
+		var query=req.params.categoryId;
+		var items=await db.getItemsByCategoryId(query);		
+		return res.status(200).json({"items":items})
+	}catch(e){
+		next(e);
+	}
+});
 //centralized error handler
 app.use((err, req, res, next) => {
   // log the error...
