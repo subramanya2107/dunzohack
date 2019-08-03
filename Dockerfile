@@ -1,10 +1,10 @@
 # build environment
-# FROM node:10.15.1-alpine as clientbuild
-# WORKDIR /client
-# COPY ./client/package.json /client/package.json
-# RUN npm install --silent
-# COPY ./client /client
-# RUN npm run build
+FROM node:10.15.1-alpine as clientbuild
+WORKDIR /client
+COPY ./client/package.json /client/package.json
+RUN npm install --silent
+COPY ./client /client
+RUN npm run build
 
 FROM node:10.15.1-alpine
 
@@ -22,6 +22,6 @@ RUN npm install
 
 # Bundle app source
 COPY . .
-# COPY --from=clientbuild /client/build/. /usr/src/app/public/.
+COPY --from=clientbuild /client/build/. /usr/src/app/public/.
 EXPOSE 3000
 CMD [ "npm", "start" ]
