@@ -1,0 +1,104 @@
+ner = { type: "CLASS", value: "edu.stanford.nlp.ling.CoreAnnotations$NamedEntityTagAnnotation" }
+normalized = { type: "CLASS", value: "edu.stanford.nlp.ling.CoreAnnotations$NormalizedNamedEntityTagAnnotation" }
+tokens = { type: "CLASS", value: "edu.stanford.nlp.ling.CoreAnnotations$TokensAnnotation" }
+
+
+
+
+MONTH_MAP = {
+  "JAN": "01",
+  "FEB": "02",
+  "MAR": "03",
+  "APR": "04",
+  "MAY": "05",
+  "JUN": "06",
+  "JUL": "07",
+  "AUG": "08",
+  "SEP": "09",
+  "OCT": "10",
+  "NOV": "11",
+  "DEC": "12"
+}
+
+
+
+{
+  ruleType: "tokens",
+  pattern: ( ([{ner:ORDINAL}]) /of/ ([{ner:DATE}]+) ),
+  action: ( Annotate($0, ner, "ORD_DATE"), Annotate($0, normalized, Join("-",$2[0].normalized,$1[0].normalized)) )
+}
+
+{
+  ruleType: "tokens",
+  matchWithResults: TRUE,
+  pattern: ( /(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/([1-9][0-9]{3})/ ),
+  action: ( Annotate($0, ner, "DATE"), Annotate($0, normalized, Join("-",$$0.matchResults[0].word.group(3),$$0.matchResults[0].word.group(2),$$0.matchResults[0].word.group(1))) )
+}
+
+{
+  ruleType: "tokens",
+  matchWithResults: TRUE,
+  pattern: ( /(0?[1-9]|[12][0-9]|3[01])\-(0?[1-9]|1[012])\-([1-9][0-9]{3})/ ),
+  action: ( Annotate($0, ner, "DATE"), Annotate($0, normalized, Join("-",$$0.matchResults[0].word.group(3),$$0.matchResults[0].word.group(2),$$0.matchResults[0].word.group(1))) )
+}
+
+{
+  ruleType: "tokens",
+  matchWithResults: TRUE,
+  pattern: ( /(0?[1-9]|1[012])\.(0?[1-9]|[12][0-9]|3[01])\.([1-9][0-9]{3})/ ),
+  action: ( Annotate($0, ner, "DATE"), Annotate($0, normalized, Join("-",$$0.matchResults[0].word.group(3),$$0.matchResults[0].word.group(1),$$0.matchResults[0].word.group(2))) )
+}
+
+{
+  ruleType: "tokens",
+  matchWithResults: TRUE,
+  pattern: ( /([1-9][0-9]{3})\/(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])/ ),
+  action: ( Annotate($0, ner, "DATE"), Annotate($0, normalized, Join("-",$$0.matchResults[0].word.group(1),$$0.matchResults[0].word.group(3),$$0.matchResults[0].word.group(2))) )
+}
+
+{
+  ruleType: "tokens",
+  matchWithResults: TRUE,
+  pattern: ( /([1-9][0-9]{3})\.(0?[1-9]|[12][0-9]|3[01])\.(0?[1-9]|1[012])/ ),
+  action: ( Annotate($0, ner, "DATE"), Annotate($0, normalized, Join("-",$$0.matchResults[0].word.group(1),$$0.matchResults[0].word.group(3),$$0.matchResults[0].word.group(2))) )
+}
+
+{
+  ruleType: "tokens",
+  matchWithResults: TRUE,
+  pattern: ( /([1-9][0-9]{3})\-(0?[1-9]|[12][0-9]|3[01])\-(0?[1-9]|1[012])/ ),
+  action: ( Annotate($0, ner, "DATE"), Annotate($0, normalized, Join("-",$$0.matchResults[0].word.group(1),$$0.matchResults[0].word.group(3),$$0.matchResults[0].word.group(2))) )
+}
+
+{
+  ruleType: "tokens",
+  matchWithResults: TRUE,
+  pattern: ( /([1-9][0-9]{3})\.(0?[1-9]|1[012])\.(0?[1-9]|[12][0-9]|3[01])/ ),
+  action: ( Annotate($0, ner, "DATE"), Annotate($0, normalized, Join("-",$$0.matchResults[0].word.group(1),$$0.matchResults[0].word.group(2),$$0.matchResults[0].word.group(3))) )
+}
+
+{
+  ruleType: "tokens",
+  matchWithResults: TRUE,
+  pattern: ( /(0?[1-9]|[12][0-9]|3[01])(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)([1-9][0-9]{3})/ ),
+  action: ( Annotate($0, ner, "DATE"), Annotate($0, normalized, Join("-",$$0.matchResults[0].word.group(3),MONTH_MAP[$$0.matchResults[0].word.group(2)],$$0.matchResults[0].word.group(1))) )
+}
+
+{
+  ruleType: "tokens",
+  matchWithResults: TRUE,
+  pattern: ( /[<\[\(]?(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?[>\]\)]?/ ),
+  action: ( Annotate($0, ner, "URL") )
+}
+
+{
+  ruleType: "tokens",
+  pattern: ( ([{ner:LOCATION}]+) ([{ner:TITLE}]+) ([{ner:LOCATION}]+) ),
+  action: ( Annotate($0, ner, "LOCATION") )
+}
+
+{
+  ruleType: "tokens",
+  pattern: ( /([{ner:NUMBER}] [{ner:DURATION}])/ ),
+  action: ( Annotate($0, ner, "DURATION") )
+}
