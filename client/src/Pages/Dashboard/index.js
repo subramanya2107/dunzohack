@@ -102,7 +102,7 @@ class Dashboard extends Component {
                             {view === "item" && <Icon type="arrow-left" style={{ fontSize: '20px', color: 'white', marginBottom: '20px' }} onClick={() => this.setState({ view: 'store' })} />}
                             {view === 'store' ?
                                 <Row gutter={16}>
-                                    {store && store.map(item =>
+                                    {store && store.splice(0, 10).map(item =>
                                         <Col span={8}>
                                             <Card
                                                 className="store-card"
