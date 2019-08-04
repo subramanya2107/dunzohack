@@ -86,13 +86,13 @@ class Dashboard extends Component {
                                 <Card
                                     className="category-card"
                                     bordered={false}
-                                    cover={<img src={item.name === "Food" ? food : groceries} style={{ width: '94px', margin: 'auto' }} />}
+                                    cover={<img src={item.category_name === "food" ? food : groceries} style={{ width: '50px', height: '100px', margin: 'auto' }} />}
                                     onClick={() => {
                                         this.setState({ view: 'item' })
-                                        dispatch(getItem({ category_id: item.id }))
+                                        dispatch(getItem({ category_id: item.category_id }))
                                     }}
                                 >
-                                    <Meta description={item.name} style={{ textAlign: 'center' }} />
+                                    <Meta description={item.category_name} style={{ textAlign: 'center' }} />
                                 </Card>)}
                         </div>}
                     </Sider>

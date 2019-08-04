@@ -75,7 +75,7 @@ function* getItem({ payload }) {
         if (payload.id)
             response = yield call(request, `/stores/${payload.id}/items`, { method: 'GET' })
         else if (payload.category_id)
-            response = yield call(request, `category/${payload.category_id}/items`, { method: 'GET' })
+            response = yield call(request, `/category/${payload.category_id}/items`, { method: 'GET' })
         else
             response = yield call(request, `/items/${payload.search}`, { method: 'GET' })
         yield put(setItem(response.items))
