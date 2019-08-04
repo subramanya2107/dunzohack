@@ -12,11 +12,11 @@ var category={
 	"grocery":2,
 	"others":3
 }
-async function getStoreByNameAndAddress(name,address){
+async function getStoreByNameAndpincode(name,pincode){
 	try{
 		 const q1 = {
-				   text: 'SELECT store_id FROM stores where store_name=$1 and store_address=$2',
-				   values: [name,address]
+				   text: 'SELECT store_id FROM stores where store_name=$1 and pincode=$2',
+				   values: [name,pincode]
 				 }
 	  var rows= await queryExecutor(q1);
 	  if(rows) return rows[0].store_id;
@@ -41,7 +41,7 @@ async function addNewStore(data){
 }
 async function createNewStore(data){
 	try{
-		var storeId=await getStoreByNameAndAddress(data.store_name,data.store_address);
+		var storeId=await getStoreByNameAndpincode(data.store_name,data.store_pincode);
 		if(storeId!=null)
 			return storeId;
 		else
