@@ -98,7 +98,7 @@ function* getItemDetail({ payload }) {
 function* getCategory({ payload }) {
     try {
         const response = yield call(request, '/category', { method: 'GET' })
-        yield put(setCategory(category))
+        yield put(setCategory(response.categories))
     }
     catch (e) {
         return null

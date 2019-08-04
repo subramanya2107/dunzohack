@@ -61,7 +61,7 @@ class Dashboard extends Component {
                         {!collapsed && <Dragger
                             className="upload-dragger"
                             type="file"
-                            action="http://134.209.155.59:8011//api/upload"
+                            action="http://134.209.155.59:8011/api/upload"
                         // onChange={info => {
                         //     const { status } = info.file;
                         //     if (status === 'done') console.log(info.file.name);
